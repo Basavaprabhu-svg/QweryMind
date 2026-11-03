@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QueryMind | Voice-to-SQL</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">Q</span><div><b>QueryMind</b><small>VOICE-TO-SQL ASSISTANT</small></div></div>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav active" data-view="query">◈ <span>Query Studio</span></button>
+    <button class="nav" data-view="history">◷ <span>Query History</span></button>
+    <button class="nav" data-view="schema">▦ <span>Database Explorer</span></button>
+    <div class="sidebar-bottom"><span class="dot"></span> Local SQLite database <small>Read-only execution</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow">WORKSPACE / <span id="crumb">QUERY STUDIO</span></div><h1 id="page-title">Ask your data anything.</h1></div><div class="api-status"><span class="dot"></span> AI service <b id="status-text">Ready</b></div></header>
+
+    <section id="query-view" class="view">
+      <div class="intro"><div><h2>Natural language → SQL</h2><p>Ask a business question. QueryMind builds, validates and runs a read-only query.</p></div><span class="badge">SELECT ONLY · SAFE MODE</span></div>
+      <div class="card ask-card">
+        <label for="question">YOUR QUESTION</label>
+        <textarea id="question" rows="2" placeholder="e.g. What is the average salary in each department?"></textarea>
+        <div class="ask-actions"><div class="hint">↳ Be specific about filters, grouping or sorting.</div><div class="buttons"><button id="mic-btn" class="btn secondary">🎙 Voice input</button><button id="generate-btn" class="btn primary">Generate SQL <span>→</span></button></div></div>
+        <div class="examples"><span>TRY:</span><button class="example">Show all employees in Engineering</button><button class="example">Average salary by department</button><button class="example">Total sales by customer</button></div>
+      </div>
+      <div class="section-heading"><div><h2>SQL workspace</h2><p>Review the generated query before running it.</p></div><span id="validation-badge" class="badge muted">NOT VALIDATED</span></div>
+      <div class="card sql-card"><div class="card-head"><span><i class="code-icon">⌘</i> SQL EDITOR</span><div class="buttons"><button id="validate-btn" class="btn secondary small">Validate</button><button id="run-btn" class="btn primary small">▶ Run query</button></div></div>
+        <textarea id="sql-editor" spellcheck="false" aria-label="SQL editor" placeholder="Your generated SQL will appear here. You can edit it before running."></textarea>
+        <div id="sql-message" class="message">Only a single SELECT query can be executed.</div>
+      </div>
+      <div class="section-heading result-heading"><div><h2>Query results <span id="row-count" class="count">0 rows</span></h2><p id="result-subtitle">Results will appear here after execution.</p></div><button id="export-btn" class="btn secondary small" disabled>↓ Export CSV</button></div>
+      <div class="card results-card"><div id="results"><div class="empty"><span>▤</span><b>No results yet</b><p>Ask a question and run your first query.</p></div></div></div>
+      <div class="card explanation-card"><div class="card-head"><span>✦ AI EXPLANATION</span><span class="badge muted">PLAIN LANGUAGE</span></div><p id="explanation">When your query runs, a short explanation of the result will appear here.</p></div>
+    </section>
+
+    <section id="history-view" class="view hidden"><div class="card"><div class="card-head"><span>RECENT QUERIES</span><button id="refresh-history" class="btn secondary small">Refresh</button></div><div id="history-list" class="list-empty">Your recent queries will appear here.</div></div></section>
+    <section id="schema-view" class="view hidden"><div class="intro"><div><h2>Database Explorer</h2><p>Tables, columns and primary keys available to QueryMind.</p></div></div><div id="schema-list" class="schema-grid"></div></section>
+    <footer>QueryMind · AI-assisted analytics <span>Sample data · Read-only mode</span></footer>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

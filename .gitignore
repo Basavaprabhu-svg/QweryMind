@@ -1,0 +1,28 @@
+# Environment variables and secrets
+
+.env
+.env.*
+
+# Keep the example configuration file
+
+!.env.example
+
+# Python virtual environments
+
+venv/
+.venv/
+
+# Python cache files
+
+**pycache**/
+*.py[cod]
+
+# Local SQLite database
+
+querymind.db
+
+# Editor and operating system files
+
+.vscode/
+.DS_Store
+Thumbs.db
